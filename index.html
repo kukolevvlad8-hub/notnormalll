@@ -20418,7 +20418,7 @@ function drawCustomVectorIcon(iconKey, cx, cy, sz, isHover, accentColor = '#58a6
     pop();
 }
 
-function drawMainMenuCard(btn, title, subtitle, iconKey, badgeText, badgeBgColor, accentColor = '#58a6ff') {
+function drawMainMenuCard(btn, title, subtitle, iconKey, badgeText, badgeBgColor, accentColor = '#58a6ff', alignCenter = false) {
     if (!btn || !btn.w) return false;
     let pointerOver = isPointerOver(btn);
     let isFlashing = (buttonPressFlashBtn === btn && (millis() - buttonPressFlashTime < 140));
@@ -20623,7 +20623,8 @@ function drawMainMenuCard(btn, title, subtitle, iconKey, badgeText, badgeBgColor
 
     } else {
         // === STANDARD GRID CARD WITH CUSTOM VECTOR ICON BADGE ===
-        let textX = bx + (activeMenuSkin === 1 ? 16 : 14);
+        let isCentered = alignCenter || (title === "НАСТРОЙКИ");
+        let textX = isCentered ? (bx + bw / 2) : (bx + (activeMenuSkin === 1 ? 16 : 14));
         let textRightBound = bx + bw - 10;
 
         // Badge Pill (Top Right) if present
@@ -20670,14 +20671,14 @@ function drawMainMenuCard(btn, title, subtitle, iconKey, badgeText, badgeBgColor
             pop();
         }
 
-        // Title and Subtitle aligned on left
-        let availTextW = max(40, textRightBound - textX);
+        // Title and Subtitle
+        let availTextW = max(40, isCentered ? (bw - 24) : (textRightBound - textX));
 
         let displayTitle = isMenuGlitchBlocked() ? getGlitchScrambledText(title, false) : title;
         let displaySub = isMenuGlitchBlocked() ? getGlitchScrambledText(subtitle, true) : subtitle;
 
         noStroke();
-        textAlign(LEFT, CENTER);
+        textAlign(isCentered ? CENTER : LEFT, CENTER);
         textFont('system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif');
         textStyle(BOLD);
         
@@ -20750,30 +20751,30 @@ function drawMainMenu() {
     drawMainMenuCard(playBtn, "БЫСТРЫЙ МАТЧ", "1 на 1 или против ИИ • Настройка", 'quick_match', null, null, '#2ea043');
 
     // 2. Online Game
-    drawMainMenuCard(onlineMenuBtn, "СЕТЕВАЯ ИГРА", "Дуэли и комнаты", 'online', "ONLINE", '#2ea043', '#ff9900');
+    drawMainMenuCard(onlineMenuBtn, "СЕТЕВАЯ ИГРА", "Дуэли и комнаты", 'online', null, null, '#ff9900');
 
     // 3. Tournament
-    drawMainMenuCard(tournamentMenuBtn, "ТУРНИР", "Сетка плей-офф", 'tournament', "КУБОК", '#e3b341', '#ffd700');
+    drawMainMenuCard(tournamentMenuBtn, "ТУРНИР", "Сетка плей-офф", 'tournament', null, null, '#ffd700');
 
     // 4. Campaign
-    drawMainMenuCard(campaignBtn, "КАМПАНИЯ", "Уровни и испытания", 'campaign', "25 ЭТАПОВ", '#00a8ff', '#00f5d4');
+    drawMainMenuCard(campaignBtn, "КАМПАНИЯ", "Уровни и испытания", 'campaign', null, null, '#00f5d4');
 
     // 5. Sandbox
     let isSboxUnlocked = (typeof unlockedAchievements !== 'undefined' && Array.isArray(unlockedAchievements) && unlockedAchievements.includes('master_of_madness'));
     if (isSboxUnlocked) {
-        drawMainMenuCard(sandboxBtn, "ПЕСОЧНИЦА", "Свои правила и карты", 'sandbox', "ОТКРЫТО", '#9b5de5', '#9b5de5');
+        drawMainMenuCard(sandboxBtn, "ПЕСОЧНИЦА", "Свои правила и карты", 'sandbox', null, null, '#9b5de5');
     } else {
-        drawMainMenuCard(sandboxBtn, "ПЕСОЧНИЦА", "Нужна ачивка", 'sandbox', "ЗАКРЫТО", '#30363d', '#3f444a');
+        drawMainMenuCard(sandboxBtn, "ПЕСОЧНИЦА", "Нужна ачивка", 'sandbox', null, null, '#3f444a');
     }
 
     // 6. Shop
-    drawMainMenuCard(shopBtn, "МАГАЗИН", "Завоз каждые 5 часов", 'shop', "HOT", '#e3b341', '#ffd700');
+    drawMainMenuCard(shopBtn, "МАГАЗИН", "Завоз каждые 5 часов", 'shop', null, null, '#ffd700');
 
     // 7. Cosmetics (Locker)
     drawMainMenuCard(cosmeticsMenuBtn, "ГАРДЕРОБ", "Кастомизация и стили", 'cosmetics', null, null, '#00ffcc');
 
     // 8. Settings
-    drawMainMenuCard(settingsMenuBtn, "НАСТРОЙКИ", "Звук, графика, управление", 'settings', null, null, '#8b949e');
+    drawMainMenuCard(settingsMenuBtn, "НАСТРОЙКИ", "Звук, графика, управление", 'settings', null, null, '#8b949e', true);
 
     // Dynamic icon styles based on activeMenuSkin
     let iconBaseBg = '#161b22';

@@ -1,0 +1,33 @@
+{
+  "entities": {
+    "users": {
+      "title": "Users",
+      "description": "User profile and account information",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "username": { "type": "string" },
+        "email": { "type": "string" },
+        "password": { "type": "string" },
+        "displayName": { "type": "string" },
+        "avatar": { "type": "string" },
+        "data": { "type": "object" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["username", "email", "password"]
+    },
+    "sessions": {
+      "title": "Sessions",
+      "description": "User active session tokens",
+      "type": "object",
+      "properties": {
+        "token": { "type": "string" },
+        "userId": { "type": "string" },
+        "username": { "type": "string" },
+        "email": { "type": "string" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["token", "userId"]
+    }
+  }
+}

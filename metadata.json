@@ -1,0 +1,6 @@
+{
+  "name": "Chip Shot Soccer",
+  "description": "Chip Shot Soccer (SoccerPool) - A physics-based tabletop soccer game with flick controls, single-player campaign, local vs AI / 2P, real-time online multiplayer rooms, and esports tournaments.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
